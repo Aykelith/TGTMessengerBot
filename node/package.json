@@ -1,0 +1,36 @@
+{
+  "name": "messenger-get-started",
+  "version": "1.0.0",
+  "description": "Get started example for Messenger Platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon src/app.js --exec babel-node",
+    "forever": "forever start -c node_modules/.bin/babel-node -l forever.log -o out.log -e err.log src/app.js",
+    "lint": "jshint --exclude node_modules .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fbsamples/messenger-platform-samples.git"
+  },
+  "author": "Facebook",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-preset-es2015": "^6.24.1",
+    "body-parser": "^1.15.0",
+    "config": "^1.20.4",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "mongodb": "^2.2.30",
+    "monk": "^6.0.1",
+    "request": "^2.72.0"
+  },
+  "engines": {
+    "node": "~4.1.2"
+  },
+  "devDependencies": {
+    "babel-plugin-module-resolver": "^2.7.1"
+  }
+}
