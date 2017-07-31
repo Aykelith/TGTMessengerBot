@@ -13,6 +13,7 @@
 import MessengerAPI from 'MessengerAPI';
 import Database from 'Database';
 import ComingOutApp from 'ComingOutApp';
+import GamesApp from 'GamesApp';
 
 import express from 'express';
 
@@ -34,6 +35,7 @@ const ADMIN_ID = '1256338984475739';
 var messenger    = new MessengerAPI(app);
 var db           = new Database();
 var comingOutApp = new ComingOutApp(db, messenger);
+var gamesApp     = new GamesApp(db, messenger);
 
 messenger.setReceivedMessageHandler((event) => {
     var senderID = event.sender.id;
@@ -49,6 +51,7 @@ messenger.setReceivedMessageHandler((event) => {
         }
 
         if (comingOutApp.receivedMessage(senderID, messageText)) return;
+        if (gamesApp.receivedMessage(senderID, messageText)) return;
 
         var msgLowerCase = messageText.toLowerCase();
 
@@ -57,6 +60,12 @@ messenger.setReceivedMessageHandler((event) => {
             db.changeUserName(senderID, name);
             messenger.sendTextMessage(senderID, `Noul tau nume este \'${name}\'`);
             return;
+        } else if (msgLowerCase.indexOf('help') === 0) {
+            messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
+nume:[NUME NOU] - iti schimbi numele\n
+iesire:[]...`);
+        } else {
+            messenger.sendTextMessage(senderID, 'Nu inteleg ce vrei sa spui...');
         }
     }
 });
@@ -65,7 +74,8 @@ messenger.setReceivedPostbackHandler((event) => {
     var senderID = event.sender.id;
     var payload = event.postback.payload;
 
-    comingOutApp.receivedPostback(senderID, payload);
+    if (comingOutApp.receivedPostback(senderID, payload)) return;
+    if (gamesApp.receivedPostback(senderID, payload)) return;
 });
 
 // Start server

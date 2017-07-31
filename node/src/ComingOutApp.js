@@ -60,11 +60,13 @@ export default class ComingOutApp {
         switch (payload) {
             case 'USER_VIN':
                 this.db.users[senderID].coming = true;
-                return;
+                return true;
 
             case 'USER_NUVIN':
                 this.db.users[senderID].coming = false;
-                return;
+                return true;
         }
+
+        return false;
     }
 }

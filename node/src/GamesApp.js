@@ -1,11 +1,12 @@
+import GamesTypes from 'GamesTypes';
+import RechinulGame from 'RechinulGame';
+
 export default class GamesApp {
     constructor(database, messenger) {
         this.db = database;
         this.messenger = messenger;
 
-        this.inGame = true;
-        this.gameHost = null;
-        this.gameType = null;
+        this.game = null;
 
         this.receivedMessage = this.receivedMessage.bind(this);
         this.receivedPostback = this.receivedPostback.bind(this);
@@ -15,40 +16,31 @@ export default class GamesApp {
         var msgLowerCase = messageText.toLowerCase();
 
         if (msgLowerCase.indexOf('jocuri') !== -1) {
-            messenger.sendButtonMessage(senderID, "Jocuri disponibile:", [
+            this.messenger.sendButtonMessage(senderID, "Jocuri disponibile:", [
                 {
                     type:    "postback",
-                    title:   "Imparatiile",
-                    payload: "USER_GAME_IMPARATIILE"
+                    title:   "Rechinul",
+                    payload: GamesTypes.RECHINUL.payload
                 }
             ]);
+            return true;
+        } else if (this.game !== null && this.game.getHostID() == senderID && msgLowerCase.indexOf('gata jocul') !== -1) {
+            this.game = null;
+            this.messenger.sendTextMessage(senderID, 'Jocul s-a terminat');
         }
 
-        if (this.gameType === 0) {
-            console.log(senderID, gameHost);
-            if (msgLowerCase.indexOf('cuvant:') === 0) {
-                var cuvant = msgLowerCase.substring(7);
-                db.users[senderID].cuvant = cuvant;
-                messenger.sendTextMessage(senderID, `Cuvantul ales este \'${cuvant}\'`);
-            } else if (msgLowerCase.indexOf('cuvinte') !== -1 && senderID === gameHost) {
-                var responseMessage = '';
-                db.forEachUser((id, user) => {
-                    if (user.cuvant) {
-                        responseMessage += user.name + ' - ' + user.cuvant + '\n';
-                    }
-                });
-                if (responseMessage === '') responseMessage = "Trist. Nimeni...";
-                messenger.sendTextMessage(senderID, responseMessage);
-            }
-        }
+        if (this.game !== null) return this.game.receivedMessage(senderID, messageText);
+        else                    return false;
     }
 
     receivedPostback(senderID, payload) {
         switch (payload) {
-            case 'USER_GAME_IMPARATIILE':
-                gameType = 0;
-                gameHost = senderID;
-                break;
+            case GamesTypes.RECHINUL.payload:
+                this.game = new RechinulGame(senderID, this.db, this.messenger);
+                this.messenger.sendTextMessage(senderID, "Jocul este \'Rechinul\'");
+                return true;
         }
+
+        return false;
     }
 }
