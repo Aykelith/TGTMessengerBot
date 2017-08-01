@@ -1,5 +1,6 @@
 import GamesTypes from 'GamesTypes';
 import RechinulGame from 'RechinulGame';
+import ImparatiileGame from 'ImparatiileGame';
 
 export default class GamesApp {
     constructor(database, messenger) {
@@ -21,12 +22,29 @@ export default class GamesApp {
                     type:    "postback",
                     title:   "Rechinul",
                     payload: GamesTypes.RECHINUL.payload
+                },
+                {
+                    type:    "postback",
+                    title:   "Imparatiile",
+                    payload: GamesTypes.IMPARATIILE.payload
                 }
             ]);
             return true;
-        } else if (this.game !== null && this.game.getHostID() == senderID && msgLowerCase.indexOf('gata jocul') !== -1) {
-            this.game = null;
-            this.messenger.sendTextMessage(senderID, 'Jocul s-a terminat');
+        } else if (this.game !== null && this.game.getHostID() == senderID) {
+            if (msgLowerCase.indexOf('gata jocul') !== -1) {
+                this.game = null;
+                this.messenger.sendTextMessage(senderID, 'Jocul s-a terminat');
+            } else if (msgLowerCase.indexOf('scoate:') === 0) {
+                var user = msgLowerCase.substring(7);
+
+                var kickedPlayerID = this.game.kickPlayer(user);
+                if (kickedPlayerID !== null) {
+                    this.messenger.sendTextMessage(senderID, `${user} a iesit din joc`);
+                    this.messenger.sendTextMessage(kickedPlayerID, "Ai fost dat afara din joc! Rusine sa-ti fie!!");
+                } else {
+                    this.messenger.sendTextMessage(senderID, `'${user}' nu exista!`);
+                }
+            }
         }
 
         if (this.game !== null) return this.game.receivedMessage(senderID, messageText);
@@ -38,6 +56,11 @@ export default class GamesApp {
             case GamesTypes.RECHINUL.payload:
                 this.game = new RechinulGame(senderID, this.db, this.messenger);
                 this.messenger.sendTextMessage(senderID, "Jocul este \'Rechinul\'");
+                return true;
+
+            case GamesTypes.IMPARATIILE.payload:
+                this.game = new ImparatiileGame(senderID, this.db, this.messenger);
+                this.messenger.sendTextMessage(senderID, "Jocul este \'Imparatiile\'");
                 return true;
         }
 

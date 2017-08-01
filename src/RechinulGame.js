@@ -1,13 +1,16 @@
-class RechinulGame {
+export default class RechinulGame {
     constructor(hostID, database, messenger) {
         this.db = database;
         this.messenger = messenger;
         this.hostID = hostID;
 
-        this.players = [];
+        this.players = [ hostID ];
 
         this.receivedMessage = this.receivedMessage.bind(this);
         this.getHostID = this.getHostID.bind(this);
+        this.kickPlayer = this.kickPlayer.bind(this);
+
+        this.randomIntFromInterval = this.randomIntFromInterval.bind(this);
     }
 
     getHostID() { return this.hostID; }
@@ -51,9 +54,6 @@ class RechinulGame {
                 }
 
                 return true;
-            } else if (msgLowerCase.indexOf('scoate:') !== -1) {
-
-                return true;
             }
         }
 
@@ -64,6 +64,15 @@ class RechinulGame {
     {
         return Math.floor(Math.random()*(max-min+1)+min);
     }
-};
 
-export default RechinulGame;
+    kickPlayer(name) {
+        for (var i=0; i<this.players.length; ++i) {
+            if (this.db.users[this.players[i]].name == user) {
+                var id = this.players[i];
+                this.players.splice(i, 1);
+                return id;
+            }
+        }
+        return null;
+    }
+};

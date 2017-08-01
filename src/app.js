@@ -10,8 +10,6 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-var opbeat = require('opbeat').start();
-
 import MessengerAPI from 'MessengerAPI';
 import Database from 'Database';
 import ComingOutApp from 'ComingOutApp';
@@ -31,7 +29,6 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(opbeat.middleware.express());
 
 const ADMIN_ID = '1256338984475739';
 
