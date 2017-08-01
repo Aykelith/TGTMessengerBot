@@ -55,7 +55,7 @@ export default class NicoApp {
             this.messenger.sendTextMessage(senderID, Array(641).join(this.emoticons.unicorn));
             this.messenger.sendTextMessage(senderID, Array(641).join(this.emoticons.unicorn));
             this.messenger.sendTextMessage(senderID, "Can you handle so many unicorns???");
-            this.steps.that_is_all_you_can_do = false;
+            this.steps.unicorns.that_is_all_you_can_do = false;
             return true;
         } else if (this.isElementInString(msgLowerCase, this.emoticons.hearts)) {
             this.messenger.sendTextMessage(senderID, this.emoticons.hearts.join(''));
