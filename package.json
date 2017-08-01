@@ -28,9 +28,6 @@
     "request": "^2.72.0",
 	"babel-plugin-module-resolver": "^2.7.1"
   },
-  "engines": {
-    "node": "~4.1.2"
-  },
   "devDependencies": {
     "babel-plugin-module-resolver": "^2.7.1"
   }

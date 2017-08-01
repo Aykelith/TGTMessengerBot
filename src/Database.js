@@ -5,7 +5,7 @@ export default class Database {
     constructor() {
         const self = this;
 
-        var db_url = 'mongodb://localhost:27017/tgt';
+        var db_url = 'mongodb://alex:1997526alex@ds129593.mlab.com:29593/heroku_rb27j21z'; //'mongodb://localhost:27017/tgt';
         this.db = monk(db_url);
         this.db_users = this.db.get('users');
 
