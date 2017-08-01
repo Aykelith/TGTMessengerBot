@@ -19,13 +19,14 @@ import NicoApp from 'NicoApp';
 import express from 'express';
 import https from 'https';
 import fs from 'fs';
+import path from 'path';
 
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
-console.log(`Number of cores:${numCPUs}`);
 
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`);
+    console.log(`Number of cores:${numCPUs}`);
 
     // Fork workers.
     for (let i = 0; i < numCPUs; i++) {
@@ -38,8 +39,6 @@ if (cluster.isMaster) {
     });
 } else {
     var request = require('request');
-
-    import path from 'path';
 
     var app = express();
     app.set('port', process.env.PORT || 3000);
@@ -117,8 +116,6 @@ iesire:[]...`);
     // Webhooks must be available via SSL with a certificate signed by a valid
     // certificate authority.
     app.listen(app.get('port'), function() {
-        console.log('Node app is running on port', app.get('port'));
+        console.log(`Node app with pid ${process.pid} is running on port`, app.get('port'));
     });
-
-    console.log(`Worker ${process.pid} started`);
 }
