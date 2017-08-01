@@ -22,7 +22,7 @@ import fs from 'fs';
 import path from 'path';
 
 const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+const numCPUs = 2;
 
 if (cluster.isMaster) {
     console.log(`Master ${process.pid} is running`);
