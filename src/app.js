@@ -24,6 +24,9 @@ var request = require('request');
 
 import path from 'path';
 
+const numCPUs = require('os').cpus().length;
+console.log(`Number of cores:${numCPUs}`);
+
 var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
