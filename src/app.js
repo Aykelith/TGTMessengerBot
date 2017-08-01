@@ -10,6 +10,16 @@
 /* jshint node: true, devel: true */
 'use strict';
 
+import MessengerAPI from 'MessengerAPI';
+import Database from 'Database';
+import ComingOutApp from 'ComingOutApp';
+import GamesApp from 'GamesApp';
+import NicoApp from 'NicoApp';
+
+import express from 'express';
+import https from 'https';
+import fs from 'fs';
+
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 console.log(`Number of cores:${numCPUs}`);
@@ -27,16 +37,6 @@ if (cluster.isMaster) {
         cluster.fork();
     });
 } else {
-    import MessengerAPI from 'MessengerAPI';
-    import Database from 'Database';
-    import ComingOutApp from 'ComingOutApp';
-    import GamesApp from 'GamesApp';
-    import NicoApp from 'NicoApp';
-
-    import express from 'express';
-    import https from 'https';
-    import fs from 'fs';
-
     var request = require('request');
 
     import path from 'path';
