@@ -8,7 +8,7 @@ export default class NicoApp {
 
         this.isElementInString = this.isElementInString.bind(this);
 
-        this.nicoID = 123123123;
+        this.nicoID = 1295977860525337;
         this.meID =   1256338984475739;
 
         this.steps = {
