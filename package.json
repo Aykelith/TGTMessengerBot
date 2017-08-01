@@ -4,14 +4,14 @@
   "description": "Get started example for Messenger Platform",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon src/app.js --exec babel-node",
+    "start": "node_modules/.bin/babel-node src/app",
     "forever": "forever start -c node_modules/.bin/babel-node -l forever.log -o out.log -e err.log src/app.js",
     "lint": "jshint --exclude node_modules .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fbsamples/messenger-platform-samples.git"
+    "url": "https://github.com/Aykelith/TGTMessengerBot.git"
   },
   "author": "Facebook",
   "license": "ISC",
@@ -25,7 +25,8 @@
     "express": "^4.13.4",
     "mongodb": "^2.2.30",
     "monk": "^6.0.1",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+	"babel-plugin-module-resolver": "^2.7.1"
   },
   "engines": {
     "node": "~4.1.2"

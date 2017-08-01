@@ -14,10 +14,13 @@ import MessengerAPI from 'MessengerAPI';
 import Database from 'Database';
 import ComingOutApp from 'ComingOutApp';
 import GamesApp from 'GamesApp';
+import NicoApp from 'NicoApp';
 
 import express from 'express';
 import https from 'https';
 import fs from 'fs';
+
+var request = require('request');
 
 import path from 'path';
 
@@ -27,30 +30,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/.well-known/acme-challenge/si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE', (req, res) => {
-	res.send('si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE.dmIeWWb-GKapH7nMmhZMWilZWbgfL1vtAOspqqAjF5c');
-});
-
-app.get('/.well-known/acme-challenge/si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE:', (req, res) => {
-        res.send('si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE.dmIeWWb-GKapH7nMmhZMWilZWbgfL1vtAOspqqAjF5c');
-});
-
-
-var options = {
-   key: fs.readFileSync('/home/pi/ssl/privkey.pem'),
-   cert: fs.readFileSync('/home/pi/ssl/fullchain.pem'),
-   requestCert: false,
-   rejectUnauthorized: false
-};
-
-var server = https.createServer(options, app);
-
 const ADMIN_ID = '1256338984475739';
 
 var messenger    = new MessengerAPI(app);
 var db           = new Database();
 var comingOutApp = new ComingOutApp(db, messenger);
 var gamesApp     = new GamesApp(db, messenger);
+var nicoApp      = new NicoApp(db, messenger);
 
 messenger.setReceivedMessageHandler((event) => {
     var senderID = event.sender.id;
@@ -60,13 +46,20 @@ messenger.setReceivedMessageHandler((event) => {
 
     if (messageText) {
         if (!db.userExists(senderID)) {
-            db.insertUser(senderID, messageText);
-            messenger.sendTextMessage(senderID, `Bine ai venit, ${messageText}!`);
-            return;
+            if (!db.users[senderID]) {
+                messenger.sendTextMessage(senderID, "Bine ai venit!\nCum te cheama(prenumele)?");
+                db.insertTemporaryUser(senderID);
+                return;
+            } else {
+                db.insertUser(senderID, messageText);
+                messenger.sendTextMessage(senderID, `Bine ai venit, ${messageText}!`);
+                return;
+            }
         }
 
         if (comingOutApp.receivedMessage(senderID, messageText)) return;
         if (gamesApp.receivedMessage(senderID, messageText)) return;
+		if (nicoApp.receivedMessage(senderID, messageText)) return;
 
         var msgLowerCase = messageText.toLowerCase();
 
@@ -75,6 +68,16 @@ messenger.setReceivedMessageHandler((event) => {
             db.changeUserName(senderID, name);
             messenger.sendTextMessage(senderID, `Noul tau nume este \'${name}\'`);
             return;
+        } else if (msgLowerCase.indexOf('caine') !== -1) {
+            request('http://thedogapi.co.uk/api/v1/dog', function (error, response, body) {
+                if (response.statusCode != 200) {
+                    messenger.sendTextMessage(senderID, "Ma simt cam prost momentan...");
+                    return;
+                }
+
+                var url = JSON.parse(body).data[0].url;
+                messenger.sendImageMessage(senderID, url);
+            });
         } else if (msgLowerCase.indexOf('help') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
 nume:[NUME NOU] - iti schimbi numele\n
@@ -96,7 +99,7 @@ messenger.setReceivedPostbackHandler((event) => {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
-server.listen(app.get('port'), function() {
+app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
 

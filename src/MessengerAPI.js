@@ -335,7 +335,7 @@ export default class MessengerAPI {
     * Send an image using the Send API.
     *
     */
-    sendImageMessage(recipientId) {
+    sendImageMessage(recipientId, url) {
         var messageData = {
             recipient: {
                 id: recipientId
@@ -344,7 +344,7 @@ export default class MessengerAPI {
                 attachment: {
                     type: "image",
                     payload: {
-                        url: this.SERVER_URL + "/assets/rift.png"
+                        url: url
                     }
                 }
             }

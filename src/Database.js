@@ -29,6 +29,7 @@ export default class Database {
         this.insertUser = this.insertUser.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
         this.forEachUser = this.forEachUser.bind(this);
+        this.insertTemporaryUser = this.insertTemporaryUser.bind(this);
     }
 
     userExists(id) {
@@ -46,6 +47,11 @@ export default class Database {
         this.users_ids.push(id);
         this.users[id] = {};
         this.users[id].name = name;
+    }
+
+    insertTemporaryUser(id) {
+        this.users[id] = {};
+        this.users[id].tmp = true;
     }
 
     changeUserName(id, newName) {
