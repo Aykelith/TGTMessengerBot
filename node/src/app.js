@@ -27,11 +27,20 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/.well-known/acme-challenge/si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE', (req, res) => {
+	res.send('si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE.dmIeWWb-GKapH7nMmhZMWilZWbgfL1vtAOspqqAjF5c');
+});
+
+app.get('/.well-known/acme-challenge/si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE:', (req, res) => {
+        res.send('si6n4QB7kMgAUmKVhSFE7a_xSuoOM7U7bd9uFb3w6iE.dmIeWWb-GKapH7nMmhZMWilZWbgfL1vtAOspqqAjF5c');
+});
+
+
 var options = {
-    key: fs.readFileSync('~/ssl/server.key'),
-    cert: fs.readFileSync('~/ssl/server.crt'),
-    requestCert: false,
-    rejectUnauthorized: false
+   key: fs.readFileSync('/home/pi/ssl/privkey.pem'),
+   cert: fs.readFileSync('/home/pi/ssl/fullchain.pem'),
+   requestCert: false,
+   rejectUnauthorized: false
 };
 
 var server = https.createServer(options, app);
