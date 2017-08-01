@@ -45,7 +45,7 @@ export default class RechinulGame {
             return true;
         } else if (senderID == this.hostID) {
             if (msgLowerCase.indexOf('start') !== -1) {
-                var rechinulIndex = this.randomIntFromInterval(0, this.players.length);
+                var rechinulIndex = this.randomIntFromInterval(0, this.players.length - 1);
                 this.messenger.sendTextMessage(this.players[rechinulIndex], "TU ESTI RECHINUL!");
 
                 for (var i=0; i<this.players.length; ++i) {
