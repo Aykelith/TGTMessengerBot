@@ -16,6 +16,8 @@ import ComingOutApp from 'ComingOutApp';
 import GamesApp from 'GamesApp';
 
 import express from 'express';
+import https from 'https';
+import fs from 'fs';
 
 import path from 'path';
 
@@ -25,10 +27,14 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/privacy', (req, res) => {
-    console.log("AAAA");
-    return res.render('index');
-});
+var options = {
+    key: fs.readFileSync('~/ssl/server.key'),
+    cert: fs.readFileSync('~/ssl/server.crt'),
+    requestCert: false,
+    rejectUnauthorized: false
+};
+
+var server = https.createServer(options, app);
 
 const ADMIN_ID = '1256338984475739';
 
@@ -81,7 +87,7 @@ messenger.setReceivedPostbackHandler((event) => {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
 // certificate authority.
-app.listen(app.get('port'), function() {
+server.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
 
