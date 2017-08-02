@@ -38,6 +38,17 @@ var comingOutApp = new ComingOutApp(db, messenger);
 var gamesApp     = new GamesApp(db, messenger);
 var nicoApp      = new NicoApp(db, messenger);
 
+const EDI_QUOTES = [
+    'IN IAD CU TINE!',
+    'LA CAZAN CU TINE!',
+    'VEZI CA TE DUCI IN IAD!'
+]
+
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 messenger.setReceivedMessageHandler((event) => {
     var senderID = event.sender.id;
 
@@ -78,6 +89,8 @@ messenger.setReceivedMessageHandler((event) => {
                 var url = JSON.parse(body).data[0].url;
                 messenger.sendImageMessage(senderID, url);
             });
+        } else if (msgLowerCase.indexOf('edi') === 0) {
+            messenger.sendTextMessage(senderID, EDI_QUOTES[randomIntFromInterval(0, EDI_QUOTES.length-1)]);
         } else if (msgLowerCase.indexOf('help') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
 nume:[NUME NOU] - iti schimbi numele\n
