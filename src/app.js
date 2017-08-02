@@ -106,16 +106,16 @@ messenger.setReceivedMessageHandler((event) => {
         } else if (msgLowerCase.indexOf('manu') === 0) {
             messenger.sendTextMessage(senderID, ' ');
         } else if (msgLowerCase.indexOf('help') === 0) {
-            messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
-nume:[NUME NOU] - iti schimbi numele\n
-iesire:[]...\n
-edi\n
-robu\n
-alex\n
-beky\n
-estera\n
-simina\n
-ionela\n
+            messenger.sendTextMessage(senderID, `Lista de cuvinte:
+nume:[NUME NOU] - iti schimbi numele
+iesire:[]...
+edi
+robu
+alex
+beky
+estera
+simina
+ionela
 manu`);
         } else {
             messenger.sendTextMessage(senderID, 'Nu inteleg ce vrei sa spui...');
