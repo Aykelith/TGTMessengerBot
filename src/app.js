@@ -103,10 +103,20 @@ messenger.setReceivedMessageHandler((event) => {
             messenger.sendTextMessage(senderID, 'O sa fac o poveste');
         } else if (msgLowerCase.indexOf('ionela') === 0) {
             messenger.sendTextMessage(senderID, 'Eu nu ma joc!');
+        } else if (msgLowerCase.indexOf('manu') === 0) {
+            messenger.sendTextMessage(senderID, ' ');
         } else if (msgLowerCase.indexOf('help') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
 nume:[NUME NOU] - iti schimbi numele\n
-iesire:[]...`);
+iesire:[]...\n
+edi\n
+robu\n
+alex\n
+beky\n
+estera\n
+simina\n
+ionela\n
+manu`);
         } else {
             messenger.sendTextMessage(senderID, 'Nu inteleg ce vrei sa spui...');
         }
