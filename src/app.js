@@ -95,6 +95,12 @@ messenger.setReceivedMessageHandler((event) => {
             messenger.sendTextMessage(senderID, 'Numele aleatoriu selectat este: ' + db.users[db.users_ids[randomIntFromInterval(0, db.users_ids.length-1)]].name);
         } else if (msgLowerCase.indexOf('alex') === 0) {
             messenger.sendTextMessage(senderID, randomIntFromInterval(0, 1) ? 'TITIREZ!' : 'Tiramisu');
+        } else if (msgLowerCase.indexOf('beky') === 0 || msgLowerCase.indexOf('becky') === 0) {
+            messenger.sendTextMessage(senderID, randomIntFromInterval(0, 1) ? 'Grupul s-o racit!' : 'M-am indepartat...');
+        } else if (msgLowerCase.indexOf('estera') === 0) {
+            messenger.sendTextMessage(senderID, 'M-am suparat');
+        } else if (msgLowerCase.indexOf('ionela') === 0) {
+            messenger.sendTextMessage(senderID, 'Eu nu ma joc');
         } else if (msgLowerCase.indexOf('help') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:\n
 nume:[NUME NOU] - iti schimbi numele\n
