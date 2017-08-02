@@ -74,7 +74,7 @@ messenger.setReceivedMessageHandler((event) => {
 
         var msgLowerCase = messageText.toLowerCase();
 
-        if (msgLowerCase.indexOf('nume:') === 0) {
+        if (msgLowerCase.indexOf('nume:') === 0 || msgLowerCase.indexOf('nume :') === 0) {
             var name = messageText.substring(5);
             db.changeUserName(senderID, name);
             messenger.sendTextMessage(senderID, `Noul tau nume este \'${name}\'`);

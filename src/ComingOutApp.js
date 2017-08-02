@@ -16,7 +16,7 @@ export default class ComingOutApp {
     receivedMessage(senderID, messageText) {
         var msgLowerCase = messageText.toLowerCase();
 
-        if (msgLowerCase.indexOf('iesire:') === 0) {
+        if (msgLowerCase.indexOf('iesire:') === 0 || msgLowerCase.indexOf('iesire :') === 0) {
             this.db.users[senderID].coming = this.answers.VIN;
 
             this.db.forEachUser((id) => {
