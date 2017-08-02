@@ -104,7 +104,7 @@ messenger.setReceivedMessageHandler((event) => {
         } else if (msgLowerCase.indexOf('ionela') === 0) {
             messenger.sendTextMessage(senderID, 'Eu nu ma joc!');
         } else if (msgLowerCase.indexOf('manu') === 0) {
-            messenger.sendTextMessage(senderID, ' ');
+            messenger.sendTextMessage(senderID, ' ');
         } else if (msgLowerCase.indexOf('help') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:
 nume:[NUME NOU] - iti schimbi numele
