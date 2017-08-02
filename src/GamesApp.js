@@ -34,6 +34,7 @@ export default class GamesApp {
             if (msgLowerCase.indexOf('gata jocul') !== -1) {
                 this.game = null;
                 this.messenger.sendTextMessage(senderID, 'Jocul s-a terminat');
+                return true;
             } else if (msgLowerCase.indexOf('scoate:') === 0) {
                 var user = msgLowerCase.substring(7);
 
@@ -44,6 +45,8 @@ export default class GamesApp {
                 } else {
                     this.messenger.sendTextMessage(senderID, `'${user}' nu exista!`);
                 }
+
+                return true;
             }
         }
 
