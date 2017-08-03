@@ -8,6 +8,7 @@ export default class Database {
         var db_url = 'mongodb://alex:1997526alex@ds129593.mlab.com:29593/heroku_rb27j21z'; //'mongodb://localhost:27017/tgt';
         this.db = monk(db_url);
         this.db_users = this.db.get('users');
+        this.db_commands = this.db.get('commands');
 
         this.users_ids = [];
         this.users = {};
@@ -64,5 +65,14 @@ export default class Database {
             var id = this.users_ids[i];
             func(id, this.users[id]);
         }
+    }
+
+    getCommand(commad) {
+        this.db_commands.findOne({ command:command }, 'text').then((doc) => {
+            if (doc === null) return null;
+            else return doc.text;
+        }).catch((err) => {
+            console.error(err);
+        });
     }
 }

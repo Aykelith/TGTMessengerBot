@@ -38,12 +38,6 @@ var comingOutApp = new ComingOutApp(db, messenger);
 var gamesApp     = new GamesApp(db, messenger);
 var nicoApp      = new NicoApp(db, messenger);
 
-const EDI_QUOTES = [
-    'IN IAD CU TINE!',
-    'LA CAZAN CU TINE!',
-    'VEZI CA TE DUCI IN IAD!'
-]
-
 function randomIntFromInterval(min,max)
 {
     return Math.floor(Math.random()*(max-min+1)+min);
@@ -105,6 +99,8 @@ messenger.setReceivedMessageHandler((event) => {
             messenger.sendTextMessage(senderID, 'Eu nu ma joc!');
         } else if (msgLowerCase.indexOf('raluca') === 0) {
             messenger.sendTextMessage(senderID, 'Eu nu mimez!');
+        } else if (msgLowerCase.indexOf('rujescu') === 0) {
+            messenger.sendTextMessage(senderID, 'PE care');
         } else if (msgLowerCase.indexOf('help') === 0 || msgLowerCase.indexOf('ajutor') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:
 nume:[NUME NOU] - iti schimbi numele
@@ -116,7 +112,8 @@ beky
 estera
 simina
 raluca
-ionela`);
+ionela
+rujescu`);
         } else {
             messenger.sendTextMessage(senderID, 'Nu inteleg ce vrei sa spui...');
         }
