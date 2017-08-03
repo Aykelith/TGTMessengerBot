@@ -74,7 +74,7 @@ export default class ComingOutApp {
 
             var i = 1;
             this.db.forEachUser((id, user) => {
-                if (user.coming === null || user.coming === undefine) return;
+                if (user.coming === null || !user.coming) return;
                 var option = (user.coming === this.answers.VIN) ? 'VINE' : ((user.coming === this.answers.NU_VIN) ? 'NU VINE' : 'POATE VINE');
                 responseMessage += `${i}.${user.name} - ${option}\n`;
                 ++i;
