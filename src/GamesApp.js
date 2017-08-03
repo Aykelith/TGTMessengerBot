@@ -35,8 +35,8 @@ export default class GamesApp {
                 this.game = null;
                 this.messenger.sendTextMessage(senderID, 'Jocul s-a terminat');
                 return true;
-            } else if (msgLowerCase.indexOf('iesire:') === 0 || msgLowerCase.indexOf('iesire :') === 0) {
-                var user = msgLowerCase.substring(7);
+            } else if (msgLowerCase.indexOf('scoate:') === 0 || msgLowerCase.indexOf('scoate :') === 0) {
+                var user = msgLowerCase.substring((msgLowerCase.indexOf('scoate :') === 0) ? 8 : 7);
 
                 var kickedPlayerID = this.game.kickPlayer(user);
                 if (kickedPlayerID !== null) {

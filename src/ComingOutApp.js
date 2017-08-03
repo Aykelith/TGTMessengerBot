@@ -19,10 +19,12 @@ export default class ComingOutApp {
         if (msgLowerCase.indexOf('iesire:') === 0 || msgLowerCase.indexOf('iesire :') === 0) {
             this.db.users[senderID].coming = this.answers.VIN;
 
+            var startingString = (msgLowerCase.indexOf('iesire :') === 0) ? 8 : 7;
+
             this.db.forEachUser((id) => {
                 if (id == senderID) return;
 
-                this.messenger.sendButtonMessage(id, '(' + this.db.users[senderID].name + ') ' + messageText.substring(7), [
+                this.messenger.sendButtonMessage(id, '(' + this.db.users[senderID].name + ') ' + messageText.substring(startingString), [
                     {
                         type:    "postback",
                         title:   "Vin",

@@ -73,6 +73,17 @@ messenger.setReceivedMessageHandler((event) => {
             db.changeUserName(senderID, name);
             messenger.sendTextMessage(senderID, `Noul tau nume este \'${name}\'`);
             return;
+        } else if (msgLowerCase.indexOf('alerta:') === 0 || msgLowerCase.indexOf('alerta :') === 0) {
+            var startingString = (msgLowerCase.indexOf('alerta :') === 0) ? 8 : 7;
+
+            db.forEachUser((id) => {
+                if (id == senderID) return;
+
+                messenger.sendTextMessage(id, '(' + db.users[senderID].name + ') ' + messageText.substring(startingString));
+            });
+
+            this.messenger.sendTextMessage(senderID, 'Mesaj trimis cu success');
+            return true;
         } else if (msgLowerCase.indexOf('caine') !== -1) {
             request('http://thedogapi.co.uk/api/v1/dog', function (error, response, body) {
                 if (response.statusCode != 200) {
@@ -89,7 +100,7 @@ messenger.setReceivedMessageHandler((event) => {
                 'LA CAZAN CU TINE!',
                 'VEZI CA TE DUCI IN IAD!'
             ];
-            
+
             messenger.sendTextMessage(senderID, EDI_QUOTES[randomIntFromInterval(0, EDI_QUOTES.length-1)]);
         } else if (msgLowerCase.indexOf('robu') === 0) {
             messenger.sendTextMessage(senderID, 'Numele aleatoriu selectat este: ' + db.users[db.users_ids[randomIntFromInterval(0, db.users_ids.length-1)]].name);
