@@ -50,9 +50,9 @@ export default class ComingOutApp {
 
             this.messenger.sendTextMessage(senderID, 'Mesaj trimis cu success');
             return true;
-        } else if (senderID === this.ADMIN_ID && msgLowerCase.indexOf('schimba-iesire:') === 0) {
+        } else if (senderID == this.ADMIN_ID && msgLowerCase.indexOf('schimba-iesire:') === 0) {
             var indexOfChange = msgLowerCase.indexOf(':', 16);
-            var name = msgLowerCase.substring(15, indexOfChange - 15);
+            var name = messageText.substring(15, indexOfChange - 15);
             var value = msgLowerCase.substring(indexOfChange+1);
 
             var userID = this.db.userNameExists(name);

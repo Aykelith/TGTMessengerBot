@@ -123,6 +123,7 @@ messenger.setReceivedMessageHandler((event) => {
 nume:[NUME NOU] - iti schimbi numele
 alerta:...
 iesire:...
+Cine vine?
 edi
 robu
 alex
