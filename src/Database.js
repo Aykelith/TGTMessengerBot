@@ -19,7 +19,7 @@ export default class Database {
                 self.users[docs[i].id] = docs[i];
             }
 
-            console.log('[Database][constructor]Initial list:', this.users, this.users_ids);
+            console.log('[Database][constructor]Initial list:', this.users);
         }).catch((err) => {
             console.error(err);
         });
@@ -36,12 +36,10 @@ export default class Database {
     }
 
     userExists(id) {
-        console.log("[Database][userExists]id:", id, "allArray:", this.users_ids);
         for (var i=0; i<this.users_ids.length; ++i) {
             console.log(this.users_ids[i],id,(this.users_ids[i] == id));
             if (this.users_ids[i] == id) return true;
         }
-        console.log('\tFALSE');
         return false;
     }
 
