@@ -12,7 +12,7 @@ export default class ComingOutApp {
             POATE_VIN: 2
         }
 
-        this.ADMIN_ID = '1256338984475739';
+        this.ADMIN_ID = 1256338984475739;
     }
 
     receivedMessage(senderID, messageText) {
@@ -74,7 +74,7 @@ export default class ComingOutApp {
 
             var i = 1;
             this.db.forEachUser((id, user) => {
-                if (user.coming === null) continue;
+                if (user.coming === null) return;
                 var option = (user.coming === this.answers.VIN) ? 'VINE' : ((user.coming === this.answers.NU_VIN) ? 'NU VINE' : 'POATE VINE');
                 responseMessage += `${i}.${user.name} - ${option}\n`;
                 ++i;
