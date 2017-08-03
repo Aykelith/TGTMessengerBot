@@ -16,9 +16,7 @@ export default class Database {
         this.db_users.find({}).then((docs) => {
             for (var i=0; i<docs.length; ++i) {
                 self.users_ids.push(parseInt(docs[i].id));
-                self.users[docs[i].id] = {
-                    name: docs[i].name
-                }
+                self.users[docs[i].id] = docs[i];
             }
 
             console.log('[Database][constructor]Initial list:', this.users, this.users_ids);
@@ -27,10 +25,14 @@ export default class Database {
         });
 
         this.userExists = this.userExists.bind(this);
+        this.userNameExists = this.userNameExists.bind(this);
         this.insertUser = this.insertUser.bind(this);
         this.changeUserName = this.changeUserName.bind(this);
         this.forEachUser = this.forEachUser.bind(this);
         this.insertTemporaryUser = this.insertTemporaryUser.bind(this);
+
+        this.changeUserProperty = this.changeUserProperty.bind(this);
+        this.changeAllUsersProperties = this.changeAllUsersProperties.bind(this);
     }
 
     userExists(id) {
@@ -41,6 +43,13 @@ export default class Database {
         }
         console.log('\tFALSE');
         return false;
+    }
+
+    userNameExists(name) {
+        for (var userID in this.users) {
+            if (this.users[userID] === name) return user;
+        }
+        return null;
     }
 
     insertUser(id, name) {
@@ -58,6 +67,18 @@ export default class Database {
     changeUserName(id, newName) {
         this.db_users.update({ id: id }, { $set: { name: newName } });
         this.users[id].name = newName;
+    }
+
+    changeUserProperty(id, property, value) {
+        var updateObject = { $set: {} };
+        updateObject.$set[property] = value;
+        this.db_users.update({ id: id }, updateObject);
+    }
+
+    changeAllUsersProperties(property, value) {
+        var updateObject = { $set: {} };
+        updateObject.$set[property] = value;
+        this.db_users.update({ }, updateObject);
     }
 
     forEachUser(func) {

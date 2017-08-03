@@ -121,7 +121,8 @@ messenger.setReceivedMessageHandler((event) => {
         } else if (msgLowerCase.indexOf('help') === 0 || msgLowerCase.indexOf('ajutor') === 0) {
             messenger.sendTextMessage(senderID, `Lista de cuvinte:
 nume:[NUME NOU] - iti schimbi numele
-iesire:[]...
+alerta:...
+iesire:...
 edi
 robu
 alex
