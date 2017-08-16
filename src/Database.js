@@ -70,13 +70,14 @@ export default class Database {
     changeUserProperty(id, property, value) {
         var updateObject = { $set: {} };
         updateObject.$set[property] = value;
-        this.db_users.update({ id: id }, updateObject);
+        this.db_users.update({ id: id }, updateObject).catch((err) => { console.error(err); });
+        console.log(updateObject);
     }
 
     changeAllUsersProperties(property, value) {
         var updateObject = { $set: {} };
         updateObject.$set[property] = value;
-        this.db_users.update({ }, updateObject);
+        this.db_users.update({ }, updateObject, { multi: true }).then((e)=> {console.log(e);}).catch((err) => { console.error(err); });
     }
 
     forEachUser(func) {

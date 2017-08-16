@@ -85,7 +85,7 @@ messenger.setReceivedMessageHandler((event) => {
             this.messenger.sendTextMessage(senderID, 'Mesaj trimis cu success');
             return true;
         } else if (msgLowerCase.indexOf('caine') !== -1) {
-            request('https://api.thedogapi.co.uk/v2/dog.php', function (error, response, body) {
+            request('http://thedogapi.co.uk/api/v1/dog', function (error, response, body) {
                 if (response.statusCode != 200) {
                     messenger.sendTextMessage(senderID, "Ma simt cam prost momentan...");
                     return;
@@ -123,7 +123,6 @@ messenger.setReceivedMessageHandler((event) => {
 nume:[NUME NOU] - iti schimbi numele
 alerta:...
 iesire:...
-Cine vine?
 edi
 robu
 alex

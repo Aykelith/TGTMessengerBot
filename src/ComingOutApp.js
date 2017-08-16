@@ -12,7 +12,11 @@ export default class ComingOutApp {
             POATE_VIN: 2
         }
 
+        this.hostID = null;
+
         this.ADMIN_ID = 1256338984475739;
+
+        setTimeout(() => {this.db.changeAllUsersProperties('coming', null);}, 3000);
     }
 
     receivedMessage(senderID, messageText) {
@@ -48,6 +52,8 @@ export default class ComingOutApp {
 
             this.db.changeAllUsersProperties('coming', null);
 
+            this.hostID = senderID;
+
             this.messenger.sendTextMessage(senderID, 'Mesaj trimis cu success');
             return true;
         } else if (senderID == this.ADMIN_ID && msgLowerCase.indexOf('schimba-iesire:') === 0) {
@@ -63,6 +69,25 @@ export default class ComingOutApp {
                 this.messenger.sendTextMessage(senderID, `[ADMIN]Nu am gasit user-ul '${name}'`);
             }
 
+            return true;
+        } else if (msgLowerCase.indexOf(' vin ') !== -1 || msgLowerCase.indexOf(' vin') !== -1 || msgLowerCase.indexOf('vin ') !== -1 || msgLowerCase == 'vin') {
+            var response;
+            if (msgLowerCase.indexOf('nu') !== -1) {
+                this.db.users[senderID].coming = this.answers.NU_VIN;
+                this.db.changeUserProperty(senderID, 'coming', this.answers.NU_VIN);
+                response = 'nu vine';
+            } else if (msgLowerCase.indexOf('poate') !== -1) {
+                this.db.users[senderID].coming = this.answers.POATE_VIN;
+                this.db.changeUserProperty(senderID, 'coming', this.answers.POATE_VIN);
+                response = 'poate vine';
+            } else {
+                this.db.users[senderID].coming = this.answers.VIN;
+                this.db.changeUserProperty(senderID, 'coming', this.answers.VIN);
+                response = 'vine';
+            }
+
+            this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} ${response}`);
+            this.messenger.sendTextMessage(senderID, 'Te-am notat!');
             return true;
         } else {
             var cineIndex = msgLowerCase.indexOf("cine");
@@ -90,16 +115,22 @@ export default class ComingOutApp {
             case 'USER_VIN':
                 this.db.users[senderID].coming = this.answers.VIN;
                 this.db.changeUserProperty(senderID, 'coming', this.answers.VIN);
+                this.messenger.sendTextMessage(senderID, 'Te-am notat!');
+                this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} vine`);
                 return true;
 
             case 'USER_NUVIN':
                 this.db.users[senderID].coming = this.answers.NU_VIN;
                 this.db.changeUserProperty(senderID, 'coming', this.answers.NU_VIN);
+                this.messenger.sendTextMessage(senderID, 'Te-am notat!');
+                this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} nu vine`);
                 return true;
 
             case 'USER_POATEVIN':
                 this.db.users[senderID].coming = this.answers.POATE_VIN;
                 this.db.changeUserProperty(senderID, 'coming', this.answers.POATE_VIN);
+                this.messenger.sendTextMessage(senderID, 'Te-am notat!');
+                this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} poate vine`);
                 return true;
         }
 
