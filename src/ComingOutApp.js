@@ -15,8 +15,6 @@ export default class ComingOutApp {
         this.hostID = null;
 
         this.ADMIN_ID = 1256338984475739;
-
-        setTimeout(() => {this.db.changeAllUsersProperties('coming', null);}, 3000);
     }
 
     receivedMessage(senderID, messageText) {
