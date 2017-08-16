@@ -4,7 +4,7 @@ export default class MafiaGame {
         this.messenger = messenger;
         this.hostID = hostID;
 
-        this.players = [ hostID ];
+        this.players = [];
         this.setup = {};
         this.roles = [];
         this.total = 0;
@@ -94,6 +94,7 @@ export default class MafiaGame {
                 this.roles.push(role);
                 this.setup[role] = value;
                 this.total += value;
+                this.messenger.sendTextMessage(senderID, `${role}x${value}`);
 
                 return true;
             }
