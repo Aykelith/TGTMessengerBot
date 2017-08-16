@@ -63,7 +63,7 @@ export default class MafiaGame {
                     playersCopy.splice(index, 1);
 
                     var role;
-                    for (var j=0; j<this.roles.length - 1; ++i) {
+                    for (var j=0; j<this.roles.length - 1; ++j) {
                         role = this.roles[j];
                         if (setup[role] != 0) {
                             --setup[role];
