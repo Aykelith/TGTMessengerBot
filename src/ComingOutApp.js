@@ -72,15 +72,15 @@ export default class ComingOutApp {
             var response;
             if (msgLowerCase.indexOf('nu') !== -1) {
                 this.db.users[senderID].coming = this.answers.NU_VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.NU_VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.NU_VIN);
                 response = 'nu vine';
             } else if (msgLowerCase.indexOf('poate') !== -1) {
                 this.db.users[senderID].coming = this.answers.POATE_VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.POATE_VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.POATE_VIN);
                 response = 'poate vine';
             } else {
                 this.db.users[senderID].coming = this.answers.VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.VIN);
                 response = 'vine';
             }
 
@@ -112,21 +112,21 @@ export default class ComingOutApp {
         switch (payload) {
             case 'USER_VIN':
                 this.db.users[senderID].coming = this.answers.VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.VIN);
                 this.messenger.sendTextMessage(senderID, 'Te-am notat!');
                 this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} vine`);
                 return true;
 
             case 'USER_NUVIN':
                 this.db.users[senderID].coming = this.answers.NU_VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.NU_VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.NU_VIN);
                 this.messenger.sendTextMessage(senderID, 'Te-am notat!');
                 this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} nu vine`);
                 return true;
 
             case 'USER_POATEVIN':
                 this.db.users[senderID].coming = this.answers.POATE_VIN;
-                this.db.changeUserProperty(senderID, 'coming', this.answers.POATE_VIN);
+                this.db.changeUserProperty(parseInt(senderID), 'coming', this.answers.POATE_VIN);
                 this.messenger.sendTextMessage(senderID, 'Te-am notat!');
                 this.messenger.sendTextMessage(this.hostID, `${this.db.users[senderID].name} poate vine`);
                 return true;
