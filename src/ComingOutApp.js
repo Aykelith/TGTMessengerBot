@@ -68,7 +68,7 @@ export default class ComingOutApp {
             }
 
             return true;
-        } else if (msgLowerCase.indexOf(' vin ') !== -1 || msgLowerCase.indexOf(' vin') !== -1 || msgLowerCase.indexOf('vin ') !== -1 || msgLowerCase == 'vin') {
+        } else if (msgLowerCase.indexOf('vine') === -1 && (msgLowerCase.indexOf(' vin ') !== -1 || msgLowerCase.indexOf(' vin') !== -1 || msgLowerCase.indexOf('vin ') !== -1 || msgLowerCase == 'vin')) {
             var response;
             if (msgLowerCase.indexOf('nu') !== -1) {
                 this.db.users[senderID].coming = this.answers.NU_VIN;
