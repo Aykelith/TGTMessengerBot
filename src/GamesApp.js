@@ -1,6 +1,7 @@
 import GamesTypes from 'GamesTypes';
 import RechinulGame from 'RechinulGame';
 import ImparatiileGame from 'ImparatiileGame';
+import MafiaGame from 'MafiaGame';
 
 export default class GamesApp {
     constructor(database, messenger) {
@@ -27,6 +28,11 @@ export default class GamesApp {
                     type:    "postback",
                     title:   "Imparatiile",
                     payload: GamesTypes.IMPARATIILE.payload
+                },
+                {
+                    type:    "postback",
+                    title:   "Mafia",
+                    payload: GamesTypes.MAFIA.payload
                 }
             ]);
             return true;
@@ -64,6 +70,11 @@ export default class GamesApp {
             case GamesTypes.IMPARATIILE.payload:
                 this.game = new ImparatiileGame(senderID, this.db, this.messenger);
                 this.messenger.sendTextMessage(senderID, "Jocul este \'Imparatiile\'");
+                return true;
+
+            case GamesTypes.MAFIA.payload:
+                this.game = new MafiaGame(senderID, this.db, this.messenger);
+                this.messenger.sendTextMessage(senderID, "Jocul este \'Mafia\'");
                 return true;
         }
 
