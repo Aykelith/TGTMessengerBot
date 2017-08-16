@@ -91,7 +91,7 @@ export default class ComingOutApp {
             var cineIndex = msgLowerCase.indexOf("cine");
             var vineIndex = msgLowerCase.indexOf("vine");
 
-            if (cineIndex == -1 && vineIndex == -1) return false;
+            if (cineIndex == -1 || vineIndex == -1) return false;
 
             var responseMessage = '';
 
