@@ -79,11 +79,10 @@ messenger.setReceivedMessageHandler((event) => {
             db.forEachUser((id) => {
                 if (id == senderID) return;
 
-                messenger.sendTextMessage(id, '(' + db.users[senderID].name + ') ' + messageText.substring(startingString));
+                messenger.sendTextMessage(id, `(${db.users[senderID].name}) ${messageText.substring(startingString)}`);
             });
 
             this.messenger.sendTextMessage(senderID, 'Mesaj trimis cu success');
-            return true;
         } else if (msgLowerCase.indexOf('caine') !== -1) {
             request('https://api.thedogapi.co.uk/v2/dog.php', function (error, response, body) {
                 if (response.statusCode != 200) {
